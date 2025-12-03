@@ -1,3 +1,5 @@
+from fastapi import FastAPI
+
 
 BOOKS = [
     {'title': 'Title One', 'author': 'Author One', 'category': 'science'},
@@ -7,3 +9,15 @@ BOOKS = [
     {'title': 'Title Five', 'author': 'Author Five', 'category': 'math'},
     {'title': 'Title Six', 'author': 'Author Two', 'category': 'math'}
 ]
+
+app = FastAPI()
+
+@app.get("/")
+async def first_api():
+    return {"message": "Hello"}
+
+
+
+
+
+
