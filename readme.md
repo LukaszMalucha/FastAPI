@@ -7,7 +7,7 @@ pip install fastapi[standard]
 
 ### Run
 
-fastapi run books.py
+fastapi run books.py --reload
 
 uvicorn books:app --reload 
 

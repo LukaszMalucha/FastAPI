@@ -12,12 +12,13 @@ BOOKS = [
 
 app = FastAPI()
 
-@app.get("/")
-async def first_api():
-    return {"message": "Hello"}
+@app.get("/books")
+async def read_all_books():
+
+    return BOOKS
 
 
+@app.get("/books/{book_title}")
+async def read_book(book_title):
 
-
-
-
+    return {"book_title": book_title}
