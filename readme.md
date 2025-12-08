@@ -11,3 +11,7 @@ fastapi run books.py --reload
 
 uvicorn books:app --reload 
 
+### Test
+
+pytest
+
