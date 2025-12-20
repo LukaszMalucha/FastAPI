@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 from Books.books import app, reset_books, INITIAL_BOOKS
 
 client = TestClient(app)
-BOOKS = INITIAL_BOOKS  # for expected values
+BOOKS = INITIAL_BOOKS
 
 
 def test_read_all_books():
