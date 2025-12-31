@@ -5,11 +5,12 @@
 
 pip install fastapi[standard]
 
+n
 ### Run
 
-fastapi run books.py --reload
+fastapi run main.py --reload
 
-uvicorn books:app --reload 
+uvicorn main:app --reload 
 
 ### Test
 

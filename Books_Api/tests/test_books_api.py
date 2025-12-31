@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from Books_Api.books import app, BOOKS
+from Books_Api.main import app, BOOKS
 
 client = TestClient(app)
 

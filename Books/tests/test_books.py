@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from Books.books import app, reset_books, INITIAL_BOOKS
+from Books.main import app, reset_books, INITIAL_BOOKS
 
 client = TestClient(app)
 BOOKS = INITIAL_BOOKS
