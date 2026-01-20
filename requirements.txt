@@ -2,3 +2,9 @@ FastAPI==0.123.5
 uvicorn==0.30.6
 passlib==1.7.4
 bcrypt==4.0.1
+python-jose==3.5.0
+python-multipart==0.0.20
+sqlalchemy==2.0.44
+pydantic==2.11.7
+pytest~=9.0.1
+starlette~=0.50.0
