@@ -1,6 +1,5 @@
 from typing import Annotated
 
-
 from fastapi import APIRouter, Depends, HTTPException, status, Path, Request, status
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
@@ -31,6 +30,7 @@ db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]
 templates = Jinja2Templates(directory="templates")
 
+
 class TodoRequest(BaseModel):
     title: str = Field(min_length=3)
     description: str = Field(min_length=3, max_length=100)
@@ -48,7 +48,6 @@ def redirect_to_login():
 
 @router.get("/todo-page")
 async def render_todo_page(request: Request, db: db_dependency):
-
     try:
         user = await get_current_user(request.cookies.get("access_token"))
         if user is None:
@@ -63,16 +62,37 @@ async def render_todo_page(request: Request, db: db_dependency):
         return redirect_to_login()
 
 
-    return templates.TemplateResponse("home.html", {"request": request})
+@router.get("/add-todo-page")
+async def render_todo_page(request: Request):
+    try:
+        user = await get_current_user(request.cookies.get("access_token"))
+        if user is None:
+            return redirect_to_login()
+
+        return templates.TemplateResponse("add-todo.html", {"request": request, "user": user})
+
+    except:
+        return redirect_to_login()
 
 
+@router.get("/edit-todo-page/{todo_id}")
+async def render_edit_todo_page(request: Request, todo_id: int, db: db_dependency):
+    try:
+        user = await get_current_user(request.cookies.get("access_token"))
+        if user is None:
+            return redirect_to_login()
 
+        user_id = user.get("id")
+        todo_model = db.query(Todos).filter(Todos.id == todo_id).filter(Todos.owner_id == int(user_id)).first()
+
+        return templates.TemplateResponse("edit-todo.html",
+                                          {"request": request, "todo_model": todo_model, "user": user})
+
+    except:
+        return redirect_to_login()
 
 
 # Endpoints
-
-
-
 
 
 @router.get("/")
@@ -96,7 +116,6 @@ async def read_todo(user: user_dependency, db: db_dependency, todo_id: int = Pat
 
 @router.post("/todo", status_code=status.HTTP_201_CREATED)
 async def create_todo(user: user_dependency, db: db_dependency, todo_request: TodoRequest):
-
     if user is None:
         raise HTTPException(status_code=401, detail="Authentication Failed")
 
